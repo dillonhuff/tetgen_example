@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
   tetrahedralize(&b, &in, &out, &addin, &bgmin);
   //tetrahedralize(&b, &in, NULL, &addin, &bgmin);
 
+
   cout << "---------------- MY OUTPUT ----------------" << endl;
   cout << "# of points                 = " << out.numberofpoints << endl;
   cout << "# of tetrahedra             = " << out.numberoftetrahedra << endl;
@@ -59,7 +60,8 @@ int main(int argc, char *argv[]) {
   cout << out.numberoftetrahedra << endl;
 
   for (int i = 0; i < out.numberoftetrahedra; i++) {
-    cout << 1 << " " << 4 << " " << (out.tetrahedronlist[i] - 1) << " " << (out.tetrahedronlist[i + 1] - 1) << " " << (out.tetrahedronlist[i + 2] - 1) << " " << (out.tetrahedronlist[i + 3] - 1) << endl;
+    int tet_index = 4*i;
+    cout << 1 << " " << 4 << " " << (out.tetrahedronlist[tet_index] - 1) << " " << (out.tetrahedronlist[tet_index + 1] - 1) << " " << (out.tetrahedronlist[tet_index + 2] - 1) << " " << (out.tetrahedronlist[tet_index + 3] - 1) << endl;
   }
 
   cout << endl;
