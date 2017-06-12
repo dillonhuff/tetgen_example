@@ -69,7 +69,8 @@ int main(int argc, char *argv[]) {
   cout << "boundary" << endl;
   cout << out.numberoftrifaces << endl;
   for (int i = 0; i < out.numberoftrifaces; i++) {
-    cout << 1 << " " << 2 << " " << (out.trifacelist[i] - 1) << " " << (out.trifacelist[i + 1] - 1) << " " << (out.trifacelist[i + 2] - 1) << endl; 
+    int tri_index = 3*i;
+    cout << 1 << " " << 2 << " " << (out.trifacelist[tri_index] - 1) << " " << (out.trifacelist[tri_index + 1] - 1) << " " << (out.trifacelist[tri_index + 2] - 1) << endl; 
   }
 
   cout << endl;
@@ -78,7 +79,8 @@ int main(int argc, char *argv[]) {
   cout << out.numberofpoints << endl;
   cout << 3 << endl;
   for (int i = 0; i < out.numberofpoints; i++) {
-    cout << out.pointlist[i] << " " << out.pointlist[i + 1] << " " << out.pointlist[i + 2] << endl;
+    int vert_index = 3*i;
+    cout << out.pointlist[vert_index] << " " << out.pointlist[vert_index + 1] << " " << out.pointlist[vert_index + 2] << endl;
   }
 
   return 0;
