@@ -20,7 +20,6 @@ int main(int argc, char *argv[]) {
 
   strcpy(b.outfilename, b.infilename);
   strcat(b.outfilename, ".1");
-  
 
   tetgenio in, addin, bgmin;
   
@@ -36,6 +35,7 @@ int main(int argc, char *argv[]) {
   //tetrahedralize(&b, &in, NULL, &addin, &bgmin);
 
   cout << "---------------- MY OUTPUT ----------------" << endl;
+  cout << "# of points                 = " << out.numberofpoints << endl;
   cout << "# of tetrahedra             = " << out.numberoftetrahedra << endl;
   cout << "# of corners                = " << out.numberofcorners << endl;
   cout << "# of tetrahedron attributes = " << out.numberoftetrahedronattributes << endl;
@@ -44,6 +44,10 @@ int main(int argc, char *argv[]) {
   cout << "Tetrahedra corners" << endl;
   for (int i = 0; i < out.numberoftetrahedra; i++) {
     cout << out.tetrahedronlist[i] << "\t" << out.tetrahedronlist[i + 1] << "\t" << out.tetrahedronlist[i + 2] << "\t" << out.tetrahedronlist[i + 3] << endl;
+
+    cout << "Points = " << out.pointlist[out.tetrahedronlist[i]] << endl;
+    cout << "Points = " << out.pointlist[out.tetrahedronlist[i+1]] << endl;
+    cout << "Points = " << out.pointlist[out.tetrahedronlist[i+2]] << endl;
   }
 
   
