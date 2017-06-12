@@ -8,18 +8,19 @@ using namespace std;
 int main(int argc, char *argv[]) {
   tetgenbehavior b;
 
-  b.plc = true;
-  b.refine = false;
-  string infile = "./example";
-  for (int i = 0; i < infile.size(); i++) {
-    b.infilename[i] = infile[i];
-  }
-  b.infilename[infile.size()] = '\0';
+  b.parse_commandline(argc, argv);
+  // b.plc = true;
+  // b.refine = false;
+  // string infile = "./example";
+  // for (int i = 0; i < infile.size(); i++) {
+  //   b.infilename[i] = infile[i];
+  // }
+  // b.infilename[infile.size()] = '\0';
   
-  b.object = tetgenbehavior::POLY;
+  // b.object = tetgenbehavior::POLY;
 
-  strcpy(b.outfilename, b.infilename);
-  strcat(b.outfilename, ".1");
+  // strcpy(b.outfilename, b.infilename);
+  // strcat(b.outfilename, ".1");
 
   tetgenio in, addin, bgmin;
   
@@ -41,16 +42,38 @@ int main(int argc, char *argv[]) {
   cout << "# of tetrahedron attributes = " << out.numberoftetrahedronattributes << endl;
   cout << "# of facets                 = " << out.numberoffacets << endl;
 
-  cout << "Tetrahedra corners" << endl;
-  for (int i = 0; i < out.numberoftetrahedra; i++) {
-    cout << out.tetrahedronlist[i] << "\t" << out.tetrahedronlist[i + 1] << "\t" << out.tetrahedronlist[i + 2] << "\t" << out.tetrahedronlist[i + 3] << endl;
+  // cout << "Tetrahedra corners" << endl;
+  // for (int i = 0; i < out.numberoftetrahedra; i++) {
+  //   cout << out.tetrahedronlist[i] << "\t" << out.tetrahedronlist[i + 1] << "\t" << out.tetrahedronlist[i + 2] << "\t" << out.tetrahedronlist[i + 3] << endl;
 
-    cout << "Points = " << out.pointlist[out.tetrahedronlist[i]] << endl;
-    cout << "Points = " << out.pointlist[out.tetrahedronlist[i+1]] << endl;
-    cout << "Points = " << out.pointlist[out.tetrahedronlist[i+2]] << endl;
+  //   cout << "Points = " << out.pointlist[out.tetrahedronlist[i]] << endl;
+  //   cout << "Points = " << out.pointlist[out.tetrahedronlist[i+1]] << endl;
+  //   cout << "Points = " << out.pointlist[out.tetrahedronlist[i+2]] << endl;
+  // }
+
+  cout << "MFEM mesh v1.0" << endl << endl;
+  cout << "dimension" << endl;
+  cout << 3 << endl << endl;
+
+  cout << "elements" << endl;
+  cout << out.numberoftetrahedra << endl;
+
+  for (int i = 0; i < out.numberoftetrahedra; i++) {
+    cout << 1 << " " << 4 << " " << out.tetrahedronlist[i] << " " << out.tetrahedronlist[i + 1] << " " << out.tetrahedronlist[i + 2] << " " << out.tetrahedronlist[i + 3] << endl;
   }
 
-  
+  cout << "boundary" << endl;
+  cout << out.numberoffacets << endl;
+  for (int i = 0; i < out.numberoffacets; i++) {
+  }
+
+  cout << "vertices" << endl;
+  cout << out.numberofpoints << endl;
+  cout << 3 << endl;
+  for (int i = 0; i < out.numberofpoints; i++) {
+    cout << out.pointlist[i] << " " << out.pointlist[i + 1] << " " << out.pointlist[i + 2] << endl;
+  }
+
   return 0;
   
 }
