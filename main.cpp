@@ -62,10 +62,15 @@ int main(int argc, char *argv[]) {
     cout << 1 << " " << 4 << " " << out.tetrahedronlist[i] << " " << out.tetrahedronlist[i + 1] << " " << out.tetrahedronlist[i + 2] << " " << out.tetrahedronlist[i + 3] << endl;
   }
 
+  cout << endl;
+
   cout << "boundary" << endl;
-  cout << out.numberoffacets << endl;
-  for (int i = 0; i < out.numberoffacets; i++) {
+  cout << out.numberoftrifaces << endl;
+  for (int i = 0; i < out.numberoftrifaces; i++) {
+    cout << 1 << " " << 2 << " " << out.trifacelist[i] << " " << out.trifacelist[i + 1] << " " << out.trifacelist[i + 2] << endl; 
   }
+
+  cout << endl;
 
   cout << "vertices" << endl;
   cout << out.numberofpoints << endl;
