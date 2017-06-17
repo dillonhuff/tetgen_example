@@ -2,40 +2,105 @@
 
 #include "parse_stl.h"
 
+#include <cmath>
 #include <cassert>
 #include <iostream>
 
 using namespace std;
 using namespace stl;
 
+bool within_eps(const point& l, const point& r, double eps) {
+  double xd = l.x - r.x;
+  double yd = l.y - r.y;
+  double zd = l.z - r.z;
+  double diff = sqrt(xd*xd + yd*yd + zd*zd);
+  return diff <= eps;
+}
+
+bool within_eps(double l, double r, double eps) {
+  double diff = abs(l - r);
+  return diff <= eps;
+}
+
+typedef long index_t;
+
+struct triangle_t {
+  index_t v[3];
+
+  index_t& i() { return v[0]; }
+  const index_t& i() const { return v[0]; }
+        
+  index_t& j() { return v[1]; }
+  const index_t& j() const { return v[1]; }
+        
+  index_t& k() { return v[2]; }
+  const index_t& k() const { return v[2]; }
+        
+  triangle_t() {
+    v[0] = v[1] = v[2] = -1;
+  }
+};
+
+index_t find_index(point p, std::vector<point>& vertices, double tolerance) {
+  for (unsigned i = 0; i < vertices.size(); i++) {
+    if (within_eps(p, vertices[i], tolerance)) { return i; }
+  }
+  vertices.push_back(p);
+  return vertices.size() - 1;
+}
+
+std::vector<triangle_t>
+fill_vertex_triangles_no_winding_check(const std::vector<triangle>& triangles,
+				       std::vector<point>& vertices,
+				       double tolerance) {
+  std::vector<triangle_t> vertex_triangles;
+  for (auto t : triangles) {
+    auto v1i = find_index(t.v1, vertices, tolerance);
+    auto v2i = find_index(t.v2, vertices, tolerance);
+    auto v3i = find_index(t.v3, vertices, tolerance);
+    triangle_t tr;
+    tr.v[0] = v1i;
+    tr.v[1] = v2i;
+    tr.v[2] = v3i;
+    vertex_triangles.push_back(tr);
+  }
+
+  return vertex_triangles;
+}
+
 void write_to_poly_file(const stl_data& md) {
+  vector<point> vertices;
+  vector<triangle_t> vertex_triangles =
+    fill_vertex_triangles_no_winding_check(md.triangles, vertices, 0.0001);
+
   cout << "# Node list" << endl;
-  cout << md.triangles.size()*3 << " " << 3 << " " << 0 << " " << 0 << endl;
+  cout << vertices.size() << " " << 3 << " " << 0 << " " << 0 << endl;
   int i = 1;
-  for (auto& t : md.triangles) {
-    cout << i << " " << t.v1.x << " " << t.v1.y << " " << t.v1.z << endl;
+  for (auto& t : vertices) {
+    cout << i << " " << t.x << " " << t.y << " " << t.z << endl;
     i++;
-    cout << i << " " << t.v2.x << " " << t.v2.y << " " << t.v2.z << endl;
-    i++;
-    cout << i << " " << t.v3.x << " " << t.v3.y << " " << t.v3.z << endl;
-    i++;
+    // cout << i << " " << t.v2.x << " " << t.v2.y << " " << t.v2.z << endl;
+    // i++;
+    // cout << i << " " << t.v3.x << " " << t.v3.y << " " << t.v3.z << endl;
+    // i++;
   }
 
   cout << endl;
 
   cout << "# Facet list" << endl;
   cout << md.triangles.size() << " " << 0 << endl;
-  int j = 0;
-  for (int i = 0; i < md.triangles.size(); i++) {
+  for (int i = 0; i < vertex_triangles.size(); i++) {
+    auto t = vertex_triangles[i];
     cout << 1 << endl;
     cout << 3 << " ";
-    cout << j << " ";
-    j++;
-    cout << j << " ";
-    j++;
-    cout << j << " ";
-    j++;
-    cout << endl;
+    cout << (t.v[0] + 1) << " " << (t.v[1] + 1) << " " << (t.v[2] + 1) << endl;
+    // cout << j << " ";
+    // j++;
+    // cout << j << " ";
+    // j++;
+    // cout << j << " ";
+    // j++;
+    // cout << endl;
   }
 
   cout << endl;
@@ -53,7 +118,7 @@ int main(int argc, char *argv[]) {
   // stl_data mesh_data = parse_stl("./Box1x1x1.stl");
   // write_to_poly_file(mesh_data);
   // return 0;
-
+  
   tetgenbehavior b;
 
   b.parse_commandline(argc, argv);
