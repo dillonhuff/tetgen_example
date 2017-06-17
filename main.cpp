@@ -6,8 +6,18 @@
 #include <iostream>
 
 using namespace std;
+using namespace stl;
+
+void write_to_poly_file(const mesh_data& mesh_data) {
+  
+}
 
 int main(int argc, char *argv[]) {
+
+  stl_data mesh_data = parse_stl("./Box1x1x1.stl");
+  write_to_poly_file(mesh_data);
+  return 0;
+
   tetgenbehavior b;
 
   b.parse_commandline(argc, argv);

@@ -11,7 +11,7 @@ SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${EXTRA_CXX_COMPILE_FLAGS}")
 
 INCLUDE_DIRECTORIES(./)
 
-SET(CPP_FILES ./main.cpp ./parse_stl.cpp)
+SET(CPP_FILES main.cpp parse_stl.cpp)
 
 add_executable(main ${CPP_FILES})
 
