@@ -115,8 +115,10 @@ void write_to_poly_file(const stl_data& md) {
 
 int main(int argc, char *argv[]) {
 
-  // stl_data mesh_data = parse_stl("./Box1x1x1.stl");
+  // string target_file(argv[1]);
+  // stl_data mesh_data = parse_stl(target_file);
   // write_to_poly_file(mesh_data);
+
   // return 0;
   
   tetgenbehavior b;
