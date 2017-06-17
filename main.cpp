@@ -8,8 +8,18 @@
 using namespace std;
 using namespace stl;
 
-void write_to_poly_file(const mesh_data& mesh_data) {
-  
+void write_to_poly_file(const stl_data& md) {
+  cout << "# Node list" << endl;
+  cout << md.triangles.size()*3 << " " << 3 << " " << 0 << " " << 0 << endl;
+  int i = 0;
+  for (auto& t : md.triangles) {
+    cout << i << " " << t.v1.x << " " << t.v1.y << " " << t.v1.z << endl;
+    i++;
+    cout << i << " " << t.v2.x << " " << t.v2.y << " " << t.v2.z << endl;
+    i++;
+    cout << i << " " << t.v3.x << " " << t.v3.y << " " << t.v3.z << endl;
+    i++;
+  }
 }
 
 int main(int argc, char *argv[]) {
