@@ -1,5 +1,7 @@
 #include "tetgen.h"
 
+#include "parse_stl.h"
+
 #include <cassert>
 #include <iostream>
 
