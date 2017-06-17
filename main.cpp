@@ -11,7 +11,7 @@ using namespace stl;
 void write_to_poly_file(const stl_data& md) {
   cout << "# Node list" << endl;
   cout << md.triangles.size()*3 << " " << 3 << " " << 0 << " " << 0 << endl;
-  int i = 0;
+  int i = 1;
   for (auto& t : md.triangles) {
     cout << i << " " << t.v1.x << " " << t.v1.y << " " << t.v1.z << endl;
     i++;
@@ -20,13 +20,39 @@ void write_to_poly_file(const stl_data& md) {
     cout << i << " " << t.v3.x << " " << t.v3.y << " " << t.v3.z << endl;
     i++;
   }
+
+  cout << endl;
+
+  cout << "# Facet list" << endl;
+  cout << md.triangles.size() << " " << 0 << endl;
+  int j = 0;
+  for (int i = 0; i < md.triangles.size(); i++) {
+    cout << 1 << endl;
+    cout << 3 << " ";
+    cout << j << " ";
+    j++;
+    cout << j << " ";
+    j++;
+    cout << j << " ";
+    j++;
+    cout << endl;
+  }
+
+  cout << endl;
+
+  cout << "# Hole list" << endl;
+  cout << 0 << endl;
+  cout << endl;
+  cout << "# Region list" << endl;
+  cout << 0 << endl;
+  cout << endl;
 }
 
 int main(int argc, char *argv[]) {
 
-  stl_data mesh_data = parse_stl("./Box1x1x1.stl");
-  write_to_poly_file(mesh_data);
-  return 0;
+  // stl_data mesh_data = parse_stl("./Box1x1x1.stl");
+  // write_to_poly_file(mesh_data);
+  // return 0;
 
   tetgenbehavior b;
 
